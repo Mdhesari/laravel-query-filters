@@ -2,6 +2,7 @@
 
 namespace Mdhesari\LaravelQueryFilters\Abstract;
 
+use Illuminate\Support\Facades\Auth;
 use Mdhesari\LaravelQueryFilters\Actions\ApplyQueryFilters;
 
 abstract class BaseQueryFilters
