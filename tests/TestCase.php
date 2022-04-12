@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersProvider;
+use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app)
     {
-        return [LaravelQueryFiltersProvider::class];
+        return [LaravelQueryFiltersServiceProvider::class];
     }
 
     protected function getEnvironmentSetUp($app)

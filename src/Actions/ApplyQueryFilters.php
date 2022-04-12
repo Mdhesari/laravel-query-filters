@@ -3,6 +3,7 @@
 namespace Mdhesari\LaravelQueryFilters\Actions;
 
 use Illuminate\Support\Carbon;
+use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersServiceProvider;
 
 class ApplyQueryFilters
 {
@@ -13,7 +14,7 @@ class ApplyQueryFilters
         } else {
             $query->latest();
         }
-
+LaravelQueryFiltersServiceProvider::class;
         if ( isset($params['s']) ) {
             $query->searchLike($this->getSearchParams($query), $params['s']);
         }
