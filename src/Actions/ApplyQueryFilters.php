@@ -27,6 +27,10 @@ class ApplyQueryFilters
             $query->getModel()->setPerPage($params['per_page']);
         }
 
+        if ( isset($params['user_id']) && $this->hasUserId($query->getModel()->getFillable()) ) {
+            $query->whereUserId($params['user_id']);
+        }
+
         return $query;
     }
 
@@ -45,5 +49,10 @@ class ApplyQueryFilters
     private function getToDate(array $params): Carbon
     {
         return Carbon::createFromTimestamp($params['date_to']) ?? now();
+    }
+
+    private function hasUserId($keys): bool
+    {
+        return in_array('user_id', $keys);
     }
 }
