@@ -4,6 +4,7 @@ namespace Mdhesari\LaravelQueryFilters\Actions;
 
 use Illuminate\Support\Carbon;
 use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersServiceProvider;
+use Mdhesari\LaravelQueryFilters\Contracts\Expandable;
 
 class ApplyQueryFilters
 {
@@ -29,6 +30,14 @@ class ApplyQueryFilters
 
         if ( isset($params['user_id']) && $this->hasUserId($query->getModel()->getFillable()) ) {
             $query->whereUserId($params['user_id']);
+        }
+
+        if ( isset($params['expand']) && method_exists($query->getModel(), 'getExpandRelations') ) {
+            $relations = $query->getModel()->getExpandRelations();
+
+            $query->with(
+                array_filter($params['expand'], fn($expand) => in_array($expand, $relations))
+            );
         }
 
         return $query;
