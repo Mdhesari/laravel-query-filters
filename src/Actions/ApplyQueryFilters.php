@@ -35,6 +35,8 @@ class ApplyQueryFilters
         if ( isset($params['expand']) && method_exists($query->getModel(), 'getExpandRelations') ) {
             $relations = $query->getModel()->getExpandRelations();
 
+            $params['expand'] = explode(',', $params['expand']);
+
             $query->with(
                 array_filter($params['expand'], fn($expand) => in_array($expand, $relations))
             );
