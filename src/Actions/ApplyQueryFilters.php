@@ -16,14 +16,14 @@ class ApplyQueryFilters
             } else {
                 $query->latest();
             }
+
+            if ( isset($params['date_from']) || isset($params['date_to']) ) {
+                $query->whereBetween('created_at', [$this->getFromDate($params), $this->getToDate($params)]);
+            }
         }
 
         if ( isset($params['s']) ) {
             $query->searchLike($this->getSearchParams($query), $params['s']);
-        }
-
-        if ( isset($params['date_from']) || isset($params['date_to']) ) {
-            $query->whereBetween('created_at', [$this->getFromDate($params), $this->getToDate($params)]);
         }
 
         if ( isset($params['per_page']) ) {
