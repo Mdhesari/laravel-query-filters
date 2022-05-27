@@ -10,10 +10,12 @@ class ApplyQueryFilters
 {
     public function __invoke($query, array $params)
     {
-        if ( isset($params['oldest']) ) {
-            $query->oldest();
-        } else {
-            $query->latest();
+        if ( $query->getModel()->usesTimestamps() ) {
+            if ( isset($params['oldest']) ) {
+                $query->oldest();
+            } else {
+                $query->latest();
+            }
         }
 
         if ( isset($params['s']) ) {
