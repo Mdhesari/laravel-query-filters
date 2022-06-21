@@ -20,15 +20,17 @@ class ExpandScope implements Scope
         $params = request()->all();
 
         if ( isset($params['expand']) && method_exists($model, 'getExpandRelations') ) {
-            request()->request->remove('expand');
-
             $relations = $model->getExpandRelations();
 
             $params['expand'] = explode(',', $params['expand']);
 
             $query->with(
-                array_filter($params['expand'], fn($expand) => in_array($expand, $relations))
+                $expand = array_filter($params['expand'], fn($expand) => in_array($expand, $relations))
             );
+
+            if ( count($expand) ) {
+                request()->request->remove('expand');
+            }
         }
     }
 }
