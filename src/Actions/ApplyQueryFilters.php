@@ -60,7 +60,7 @@ class ApplyQueryFilters
                         $relationTableName = Str::plural($value[0]);
                         $relationForeignKey = Str::singular($value[0]).'_id';
 
-                        $query->innerJoin($relationTableName, "{$relationTableName}.id", '=', "{$query->getModel()->getTable()}.{$relationForeignKey}");
+                        $query->join($relationTableName, "{$relationTableName}.id", '=', "{$query->getModel()->getTable()}.{$relationForeignKey}");
 
                         $query->orderBy($value[1], $sort);
                     }
