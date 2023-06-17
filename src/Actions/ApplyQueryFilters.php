@@ -43,8 +43,8 @@ class ApplyQueryFilters
             $query->with($this->getOnlyValidRelations($params['expand'], $relations));
         }
 
-        if ( isset($data['order_by']) ) {
-            $orderBy = array_filter(explode(',', $data['order_by']), fn($item) => ! empty($item));
+        if ( isset($params['order_by']) ) {
+            $orderBy = array_filter(explode(',', $params['order_by']), fn($item) => ! empty($item));
 
             $query->getQuery()->orders = null;
 
