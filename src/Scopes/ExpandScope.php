@@ -17,7 +17,7 @@ class ExpandScope implements Scope
      */
     public function apply(Builder $query, Model $model)
     {
-        $params = request()->all();
+        $params = request()->input();
 
         if ( isset($params['expand']) && method_exists($model, 'getExpandRelations') ) {
             $relations = $model->getExpandRelations();
