@@ -33,8 +33,6 @@ class QueryDTO extends ValidatedDTO
     {
         return [
             'oldest'   => 'boolean',
-            'user_id'  => 'integer',
-            'per_page' => 'integer',
         ];
     }
 
