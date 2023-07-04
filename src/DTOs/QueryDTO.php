@@ -6,7 +6,7 @@ use WendellAdriel\ValidatedDTO\ValidatedDTO;
 
 class QueryDTO extends ValidatedDTO
 {
-    public bool $oldest;
+    public ?bool $oldest;
 
     public string $date_from;
 
@@ -32,7 +32,9 @@ class QueryDTO extends ValidatedDTO
     protected function casts(): array
     {
         return [
-            'oldest' => 'boolean',
+            'oldest'   => 'boolean',
+            'user_id'  => 'integer',
+            'per_page' => 'integer',
         ];
     }
 
