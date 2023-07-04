@@ -32,7 +32,7 @@ class QueryDTO extends ValidatedDTO
     protected function casts(): array
     {
         return [
-            'oldest'   => 'boolean',
+            //
         ];
     }
 
