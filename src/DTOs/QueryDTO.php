@@ -8,19 +8,19 @@ class QueryDTO extends ValidatedDTO
 {
     public ?bool $oldest;
 
-    public string $date_from;
+    public ?string $date_from;
 
-    public string $date_to;
+    public ?string $date_to;
 
-    public string $order_by;
+    public ?string $order_by;
 
-    public string $expand;
+    public ?string $expand;
 
-    public string $s;
+    public ?string $s;
 
-    public string $per_page;
+    public ?string $per_page;
 
-    public string $user_id;
+    public ?string $user_id;
 
     protected function defaults(): array
     {
