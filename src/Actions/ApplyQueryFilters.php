@@ -2,17 +2,29 @@
 
 namespace Mdhesari\LaravelQueryFilters\Actions;
 
+use Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Mdhesari\LaravelQueryFilters\DTOs\QueryDTO;
 use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersServiceProvider;
 use Mdhesari\LaravelQueryFilters\Contracts\Expandable;
+use WendellAdriel\ValidatedDTO\Exceptions\CastTargetException;
+use WendellAdriel\ValidatedDTO\Exceptions\MissingCastTypeException;
 
 class ApplyQueryFilters
 {
+    /**
+     * @throws CastTargetException
+     * @throws MissingCastTypeException
+     * @throws ValidationException
+     */
     public function __invoke($query, array $params)
     {
+        $params = (new QueryDTO($params))->toArray();
+
         if ( $query->getModel()->usesTimestamps() ) {
-            if ( isset($params['oldest']) ) {
+            if ( isset($params['oldest']) && $params['oldest'] ) {
                 $query->oldest();
             } else {
                 $query->latest();
@@ -80,7 +92,7 @@ class ApplyQueryFilters
     {
         $model = $query->getModel();
 
-        return \Arr::wrap(null ?? method_exists($model, 'getSearchParams') ? $model->getSearchParams() : $model->getRouteKeyName());
+        return Arr::wrap(null ?? method_exists($model, 'getSearchParams') ? $model->getSearchParams() : $model->getRouteKeyName());
     }
 
     private function getFromDate(array $params): Carbon
