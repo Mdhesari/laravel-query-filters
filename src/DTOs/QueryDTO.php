@@ -45,8 +45,8 @@ class QueryDTO extends ValidatedDTO
             'order_by'  => 'nullable|string',
             'expand'    => 'nullable|string',
             's'         => 'nullable|string',
-            'per_page'  => 'nullable|int',
-            'user_id'   => 'nullable|int',
+            'per_page'  => 'nullable|numeric',
+            'user_id'   => 'nullable|numeric',
         ];
     }
 }
