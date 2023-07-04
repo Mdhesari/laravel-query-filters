@@ -9,7 +9,7 @@ class QueryDTO extends ValidatedDTO
     protected function defaults(): array
     {
         return [
-            'oldest' => false,
+            //
         ];
     }
 
