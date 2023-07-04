@@ -18,9 +18,9 @@ class QueryDTO extends ValidatedDTO
 
     public string $s;
 
-    public int $per_page;
+    public string $per_page;
 
-    public int $user_id;
+    public string $user_id;
 
     protected function defaults(): array
     {
@@ -45,8 +45,8 @@ class QueryDTO extends ValidatedDTO
             'order_by'  => 'nullable|string',
             'expand'    => 'nullable|string',
             's'         => 'nullable|string',
-            'per_page'  => 'nullable|numeric',
-            'user_id'   => 'nullable|numeric',
+            'per_page'  => 'nullable|string|numeric',
+            'user_id'   => 'nullable|string|numeric',
         ];
     }
 }
