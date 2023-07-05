@@ -23,31 +23,31 @@ class ApplyQueryFilters
     {
         $params = (new QueryDTO($params))->toArray();
 
-        if ( $query->getModel()->usesTimestamps() ) {
-            if ( isset($params['oldest']) && $params['oldest'] ) {
+        if ($query->getModel()->usesTimestamps()) {
+            if (isset($params['oldest']) && $params['oldest']) {
                 $query->oldest();
             } else {
                 $query->latest();
             }
 
-            if ( isset($params['date_from']) || isset($params['date_to']) ) {
+            if (isset($params['date_from']) || isset($params['date_to'])) {
                 $query->whereBetween('created_at', [$this->getFromDate($params), $this->getToDate($params)]);
             }
         }
 
-        if ( isset($params['s']) ) {
+        if (isset($params['s'])) {
             $query->searchLike($this->getSearchParams($query), $params['s']);
         }
 
-        if ( isset($params['per_page']) ) {
+        if (isset($params['per_page'])) {
             $query->getModel()->setPerPage($params['per_page']);
         }
 
-        if ( isset($params['user_id']) && $this->hasUserId($query->getModel()->getFillable()) ) {
+        if (isset($params['user_id']) && $this->hasUserId($query->getModel()->getFillable())) {
             $query->whereUserId($params['user_id']);
         }
 
-        if ( isset($params['expand']) && method_exists($query->getModel(), 'getExpandRelations') ) {
+        if (isset($params['expand']) && method_exists($query->getModel(), 'getExpandRelations')) {
             $relations = $query->getModel()->getExpandRelations();
 
             $params['expand'] = explode(',', $params['expand']);
@@ -55,20 +55,20 @@ class ApplyQueryFilters
             $query->with($this->getOnlyValidRelations($params['expand'], $relations));
         }
 
-        if ( isset($params['order_by']) ) {
-            $orderBy = array_filter(explode(',', $params['order_by']), fn($item) => ! empty($item));
+        if (isset($params['order_by'])) {
+            $orderBy = array_filter(explode(',', $params['order_by']), fn ($item) => ! empty($item));
 
             $query->getQuery()->orders = null;
 
             foreach ($orderBy as $key => $value) {
-                if ( ! in_array($value, $this->getSortings()) ) {
+                if (! in_array($value, $this->getSortings())) {
                     $sort = isset($orderBy[$key + 1]) && in_array($orderBy[$key + 1], $this->getSortings()) ? $orderBy[$key + 1] : 'desc';
 
                     $value = explode('.', $value);
 
-                    if ( ! isset($value[1]) )
+                    if (! isset($value[1])) {
                         $query->orderBy($value[0], $sort);
-                    else {
+                    } else {
                         $relationTableName = Str::plural($value[0]);
                         $relationForeignKey = Str::singular($value[0]).'_id';
 
@@ -112,6 +112,6 @@ class ApplyQueryFilters
 
     private function getOnlyValidRelations(array $expand, $relations)
     {
-        return array_filter($expand, fn($expand) => in_array($expand, $relations));
+        return array_filter($expand, fn ($expand) => in_array($expand, $relations));
     }
 }

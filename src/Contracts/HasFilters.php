@@ -9,5 +9,5 @@ interface HasFilters
      *
      * @return array|string
      */
-    public function getSearchParams();
+    public function getSearchParams(): array|string;
 }

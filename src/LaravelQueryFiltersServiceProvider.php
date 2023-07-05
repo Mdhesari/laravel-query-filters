@@ -30,7 +30,7 @@ class LaravelQueryFiltersServiceProvider extends ServiceProvider
 
             return $query->{$whereClause}($relation, function (Builder $query) use ($relationAttr, $searchQuery, $attr, $attrArr, $relation, $allAttributes) {
 
-                if ( isset($attrArr[2]) ) {
+                if (isset($attrArr[2])) {
 
                     $attr = [$attrArr[1].".".$attrArr[2]];
 
@@ -43,7 +43,7 @@ class LaravelQueryFiltersServiceProvider extends ServiceProvider
 
         Builder::macro('searchLike', function ($attributes, $searchQuery) {
             $attributes = Arr::wrap($attributes);
-            if ( count($attributes) > 1 ) {
+            if (count($attributes) > 1) {
                 $this->where(function ($query) use ($attributes, $searchQuery) {
                     $query->searchLikeExecute($attributes, $searchQuery);
                 });
@@ -56,10 +56,10 @@ class LaravelQueryFiltersServiceProvider extends ServiceProvider
 
         Builder::macro('searchLikeExecute', function ($attributes, $searchQuery) {
             foreach (Arr::wrap($attributes) as $attr) {
-                if ( Str::contains($attr, '.') ) {
+                if (Str::contains($attr, '.')) {
                     $this->searchWhereHas($this, $attr, "%{$searchQuery}%", $attributes);
                 } else {
-                    if ( count(Arr::wrap($attributes)) > 1 ) {
+                    if (count(Arr::wrap($attributes)) > 1) {
                         $this->orWhere($attr, 'Like', "%{$searchQuery}%");
                     } else {
                         $this->where($attr, 'Like', "%{$searchQuery}%");
