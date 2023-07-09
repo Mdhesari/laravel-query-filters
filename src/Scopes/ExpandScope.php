@@ -24,9 +24,15 @@ class ExpandScope implements Scope
 
             $params['expand'] = explode(',', $params['expand']);
 
-            $query->with(
-                array_filter($params['expand'], fn ($expand) => in_array($expand, $relations))
-            );
+            $eagerLoads = $query->getEagerLoads();
+
+            $params['expand'] = array_filter($params['expand'], fn ($item) => ! in_array($item, $eagerLoads));
+
+            if (! empty($params['expand'])) {
+                $query->with(
+                    array_filter($params['expand'], fn ($expand) => in_array($expand, $relations))
+                );
+            }
         }
     }
 }
