@@ -33,6 +33,8 @@ class ExpandScope implements Scope
                     array_filter($params['expand'], fn ($expand) => in_array($expand, $relations))
                 );
             }
+
+            request()->merge($params['expand']);
         }
     }
 }
