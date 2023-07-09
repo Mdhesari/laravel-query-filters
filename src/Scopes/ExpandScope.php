@@ -22,15 +22,17 @@ class ExpandScope implements Scope
         if (isset($params['expand']) && method_exists($model, 'getExpandRelations')) {
             $relations = $model->getExpandRelations();
 
-            $params['expand'] = explode(',', $params['expand']);
+            if (! is_array($params['expand'])) {
+                $params['expand'] = explode(',', $params['expand']);
+            }
 
             $eagerLoads = $query->getEagerLoads();
 
-            $params['expand'] = array_filter($params['expand'], fn($item) => ! in_array($item, $eagerLoads));
+            $params['expand'] = array_filter($params['expand'], fn ($item) => ! in_array($item, $eagerLoads));
 
             if (! empty($params['expand'])) {
                 $query->with(
-                    array_filter($params['expand'], fn($expand) => in_array($expand, $relations))
+                    array_filter($params['expand'], fn ($expand) => in_array($expand, $relations))
                 );
             }
 
