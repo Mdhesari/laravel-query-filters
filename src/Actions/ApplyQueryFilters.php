@@ -7,8 +7,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Mdhesari\LaravelQueryFilters\DTOs\QueryDTO;
-use Mdhesari\LaravelQueryFilters\LaravelQueryFiltersServiceProvider;
-use Mdhesari\LaravelQueryFilters\Contracts\Expandable;
 use WendellAdriel\ValidatedDTO\Exceptions\CastTargetException;
 use WendellAdriel\ValidatedDTO\Exceptions\MissingCastTypeException;
 
@@ -21,6 +19,8 @@ class ApplyQueryFilters
      */
     public function __invoke($query, array $params)
     {
+        $params = array_map(fn ($item) => is_array($item) ? implode(',', $item) : $item, $params);
+
         $params = (new QueryDTO($params))->toArray();
 
         if ($query->getModel()->usesTimestamps()) {
