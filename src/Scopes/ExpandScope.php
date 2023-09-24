@@ -36,7 +36,7 @@ class ExpandScope implements Scope
                 );
             }
 
-            request()->merge(['expand' => $params['expand']]);
+            request()->merge(['expand' => implode(',', $params['expand'])]);
         }
     }
 }
